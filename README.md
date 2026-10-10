@@ -42,18 +42,18 @@ matters. This plugin raises the cost of the common accident, nothing more.
 
    ```sh
    mkdir -p ~/.config/maki/lua
-   cp guard.lua ~/.config/maki/lua/guard.lua
+   cp safe-ish-yolo.lua ~/.config/maki/lua/safe-ish-yolo.lua
    ```
 
 2. Load it from `~/.config/maki/init.lua`:
 
    ```lua
-   require("guard")
+   require("safe-ish-yolo")
    ```
 
 3. Grant the `run` capability. The plugin reads the command text through the
    bash tool's input slot, which needs the permission that tool declares. Add a
-   `plugin.toml` next to `init.lua` if you do not have one:
+   `plugin.toml` next to `init.lua`, or add these lines to the one you have:
 
    ```toml
    [permissions]
@@ -73,6 +73,14 @@ refused: `rm` targets /. Run it outside the agent if it is really wanted.
 ```
 
 A normal `rm -rf build/` still runs without a prompt.
+
+## Deferred
+
+- The wrapper list covers `sudo`, `doas`, `env`, `nohup`, `setsid`. Wrappers
+  that take a value before the program (`nice 5 rm`, `timeout 10 rm`) are left
+  out until their flags are parsed.
+- The protected list is fixed. It could read the session's real home and
+  working directory from the tool context instead.
 
 ## License
 

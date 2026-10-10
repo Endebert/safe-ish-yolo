@@ -26,7 +26,6 @@ local DESTRUCTIVE = {
 -- one of these is the one that matters, so `env rm -rf ~` reads as `rm`.
 -- Only wrappers that take no value before the program: `nice 5 rm` would read
 -- `5` as the verb, so `nice` and `timeout` stay out until arguments are parsed.
--- braid: next-word, surpass with wrapper-specific flag parsing
 local WRAPPER = {
   ["sudo"] = true,
   ["doas"] = true,
@@ -37,7 +36,6 @@ local WRAPPER = {
 
 -- Directories a delete must never reach. Compared exact-or-descendant, so
 -- `/etc` matches `/etc/passwd` and `/` matches every absolute path.
--- braid: fixed list, surpass with the session's real home and cwd from ctx
 local PROTECTED = {
   "/",
   "/etc",
